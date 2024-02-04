@@ -25,6 +25,11 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisSize: MainAxisSize.min,
           
           children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.asset("assets/images/logo.png", height: 100, width: 100,)),
             Text(
               "na Dira",
               style: TextStyle(

@@ -3,14 +3,14 @@ import 'package:na_dira/layers/presenters/components/button/button_widget.dart';
 import 'package:na_dira/layers/presenters/components/space/height_widget.dart';
 import 'package:na_dira/layers/presenters/components/text_field_custom/text_field_custom.dart';
 
-class GuestView extends StatefulWidget {
-  const GuestView({super.key});
+class ProductView extends StatefulWidget {
+  const ProductView({super.key});
 
   @override
-  State<GuestView> createState() => _GuestViewState();
+  State<ProductView> createState() => _ProductViewState();
 }
 
-class _GuestViewState extends State<GuestView> {
+class _ProductViewState extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,26 +21,36 @@ class _GuestViewState extends State<GuestView> {
           children: [
             Container(),
             Center(
-              child: Text("Adicione um consumidor",
+              child: Text("Adicione um Produto",
                   style: Theme.of(context).textTheme.headlineSmall),
             ),
             const HeightWidget(16),
             const Text("Nome",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            const TextFieldCustom(icon: Icon(Icons.person_rounded)),
+            const TextFieldCustom(
+                icon: Icon(Icons.emoji_food_beverage_rounded)),
             const HeightWidget(),
             const Text(
-              "Telefone",
+              "Preço",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            const TextFieldCustom(icon: Icon(Icons.phone_rounded)),
+            const TextFieldCustom(icon: Icon(Icons.attach_money_rounded)),
             const HeightWidget(24),
-            ButtonWidget(expanded: true, onPressed: ()async{
-              
-            }, child: const Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Text("Salvar", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ))
+            ButtonWidget(
+              expanded: true,
+              onPressed: () async {},
+              child: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  "Salvar",
+                  style: TextStyle(
+                    fontSize: 20,
+                    
+                    color: Colors.deepOrange,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

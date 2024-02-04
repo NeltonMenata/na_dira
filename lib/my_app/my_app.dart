@@ -11,8 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'na Dira',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        
-        colorScheme: ColorScheme.fromSeed(
+          colorScheme: ColorScheme.fromSeed(
           background: Colors.grey.shade900,
           brightness: Brightness.dark,
           seedColor: Colors.deepOrange),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:na_dira/layers/presenters/components/drawer/drawer_widget.dart';
-import 'package:na_dira/layers/presenters/components/tab_bar_view/guest/guest_view.dart';
-import 'package:na_dira/layers/presenters/components/tab_bar_view/product/product_view.dart';
-import 'package:na_dira/layers/presenters/components/tab_bar_view/sale/sale_view.dart';
+import 'package:na_dira/layers/presenters/components/page_view/guest/guest_view.dart';
+import 'package:na_dira/layers/presenters/components/page_view/product/product_view.dart';
+import 'package:na_dira/layers/presenters/components/page_view/sale/sale_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -16,19 +16,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
-
-  late TabController tabController;
+  double viewPort = .9;
+  final pageController = PageController(viewportFraction: .9);
+  int currentIndex = 0;
+  final imageBackground = "assets/images/background_cocktail.jpg";
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
@@ -41,17 +36,44 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       drawer: const DrawerWidget(),
 
-      body: TabBarView(
-          controller: tabController,
-          children: const [SaleView(), GuestView(), ProductView()]),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(imageBackground),
+              fit: BoxFit.cover,
+              opacity: .5,
+              filterQuality: FilterQuality.high),
+        ),
+        child: PageView(
+          
+          controller: pageController,
+          onPageChanged: (index) {
+            setState(() {
+              currentIndex = index;
+          
+            });
+          },
+          children: const [SaleView(), GuestView(), ProductView()],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.grey.shade800,
+          selectedItemColor: Colors.deepOrange,
+          currentIndex: currentIndex,
           onTap: (index) {
-            tabController.animateTo(index);
+            setState(() {
+              currentIndex = index;
+              pageController.animateToPage(index,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeIn);
+            });
           },
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.person_add_alt_rounded), label: "Consumidor"),
-            BottomNavigationBarItem(icon: Icon(Icons.fastfood), label: "Produtos")
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_add_alt_rounded), label: "Consumidor"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.fastfood), label: "Produtos")
           ]),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: _incrementCounter,

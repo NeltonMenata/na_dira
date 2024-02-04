@@ -142,6 +142,7 @@ class DrawerWidget extends StatelessWidget {
                                     .showSnackBar(const SnackBar(
                                   content: Text("Terminando a sessão. Aguarde!"),
                                 ));
+                                Navigator.pop(context);
       },
                             ),
                           ],
