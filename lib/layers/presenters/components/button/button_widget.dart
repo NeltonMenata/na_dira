@@ -22,8 +22,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(widget.color ?? Colors.grey.shade700),
-        shape: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(widget.color ?? Colors.grey.shade700),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

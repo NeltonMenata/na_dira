@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:na_dira/layers/api/sunmi_printer/sunmi_printer.dart';
 import 'package:na_dira/layers/presenters/components/button/button_widget.dart';
 import 'package:na_dira/layers/presenters/components/space/height_widget.dart';
 import 'package:na_dira/layers/presenters/components/space/width_widget.dart';
+import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
+//import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
 
-class SaleView extends StatelessWidget {
+class SaleView extends StatefulWidget {
   const SaleView({super.key});
+
+  @override
+  State<SaleView> createState() => _SaleViewState();
+}
+
+class _SaleViewState extends State<SaleView> {
+  bool printBinded = false;
+  int paperSize = 0;
+  String serialNumber = '';
+  String printVersion = '';
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +47,10 @@ class SaleView extends StatelessWidget {
                       ),
                     ),
                     ButtonWidget(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await ControllerSunmiPrinter.printer(
+                              'https://www.facebook.com/profile.php?id=61552111806767');
+                        },
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -87,28 +103,43 @@ class SaleView extends StatelessWidget {
                   ],
                 ),
               ),
-              //     Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Text(
-              //     'Adicione crédito',
-              //     style: Theme.of(context).textTheme.headlineMedium,
-              //   ),
-              // ),
-              // ElevatedButton(
-              //     style: ButtonStyle(
-              //         shape: MaterialStateProperty.all(
-              //             const RoundedRectangleBorder()),
-              //         backgroundColor:
-              //             MaterialStateProperty.all(Colors.deepOrange)),
-              //     onPressed: () {},
-              //     child: Text(
-              //       'Selecione o consumidor',
-              //       style: Theme.of(context).textTheme.headlineSmall,
-              //     )),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<bool?> _bindingPrinter() async {
+    final bool? result = await SunmiPrinter.bindingPrinter();
+    return result;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _bindingPrinter().then((isBing) {
+      SunmiPrinter.paperSize().then((size) {
+        setState(() {
+          paperSize = size;
+        });
+      });
+
+      SunmiPrinter.printerVersion().then((version) {
+        setState(() {
+          printVersion = version;
+        });
+      });
+      SunmiPrinter.serialNumber().then((serial) {
+        setState(() {
+          serialNumber = serial;
+        });
+      });
+
+      setState(() {
+        printBinded = isBing!;
+      });
+    });
   }
 }
